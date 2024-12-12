@@ -1,0 +1,40 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if user.is_admin %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="w3-container horizontal-margin-74px">
+                    <div class="messages w3-panel w3-pale-green w3-display-container">
+                        <span onclick="this.parentElement.style.display='none'"
+                                class="w3-button w3-medium w3-display-topright">&times;</span>
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="horizontal-margin-90px text-font-bahnschrift">
+            <h4>Create Quiz</h4>
+            <a class="lightblue-link text-size-17px" href="{% url 'create-quiz' %}">Create a new quiz</a>
+            
+            <h4>Assign Quiz</h4>
+            <a class="lightblue-link text-size-17px" href="{% url 'assign-quiz' %}">Assign a quiz to registered users</a>
+        </div>
+
+    {% else %}
+
+        <div class="horizontal-margin-90px">
+            <h3>You don't have permission to access this page</h3>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/base.js' %}"></script>
+{% endblock %}

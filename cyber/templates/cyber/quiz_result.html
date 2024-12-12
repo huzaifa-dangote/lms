@@ -1,0 +1,36 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="w3-container horizontal-margin-74px">
+                <div class="messages w3-panel w3-pale-green w3-display-container">
+                    <span onclick="this.parentElement.style.display='none'"
+                            class="w3-button w3-medium w3-display-topright">&times;</span>
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="horizontal-margin-90px text-font-bahnschrift">
+        <h3 class="text-font-bahnschrift text-weight-300">Result for {{ quiz.title }} quiz</h3>
+        <p class="text-size-17px text-weight-100">Your score: {{ score }} out of {{ total }}</p>
+
+        <!-- Points earned in the employee cyber league/table -->
+        <p>
+            {% if score >= 7 %}
+                <div style="color:green" class="text-size-17px text-weight-100">Congrats, You have gotten 10 points in the employee cyber league!</div>
+            {% else %}
+                <div style="color:red" class="text-size-17px text-weight-100">Sorry, the passing score is 7.</div>
+            {% endif %}
+        </p>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/base.js' %}"></script>
+{% endblock %}

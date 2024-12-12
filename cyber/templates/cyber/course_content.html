@@ -1,0 +1,19 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <!-- To get user id and course id -->
+    <div id="user-id" hidden>{{ user.id }}</div>
+    <div id="course-id" hidden>{{ course.id }}</div>
+
+    <div class="horizontal-margin-90px text-font-bahnschrift">
+        <h3>{{ course.title }}</h3>
+        <p class="preserve-newlines text-size-17px text-weight-100">{{ course.content.content }}</p>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/course_completion.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if user.is_admin %}
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="w3-container horizontal-margin-74px">
+                    <div class="messages w3-panel w3-pale-green w3-display-container">
+                        <span onclick="this.parentElement.style.display='none'"
+                                class="w3-button w3-medium w3-display-topright">&times;</span>
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="horizontal-margin-90px">
+            <h3>Create a course content</h3>
+            <form method="post">
+                {% csrf_token %}
+                <label for="{{ form.title.id_for_label }}" class="form_label">Title: {{ form.title }}</label>
+                <label for="{{ form.content.id_for_label }}" class="form_label">Content: {{ form.content }}</label>
+                <button type="submit" class="submit-button w3-button" style="float:right">Create</button>
+            </form>
+        </div>
+
+    {% else %}
+
+        <div class="horizontal-margin-90px">
+            <h3>You don't have permission to access this page</h3>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/base.js' %}"></script>
+{% endblock %}

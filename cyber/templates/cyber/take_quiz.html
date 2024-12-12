@@ -1,0 +1,42 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="w3-container horizontal-margin-74px">
+                <div class="messages w3-panel w3-pale-green w3-display-container">
+                    <span onclick="this.parentElement.style.display='none'"
+                            class="w3-button w3-medium w3-display-topright">&times;</span>
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="horizontal-margin-90px text-font-bahnschrift">
+        <h3 class="text-font-bahnschrift text-weight-300">{{ quiz.title }}</h3>
+        <form class="text-size-17px text-weight-100" action="{% url 'take-quiz' quiz.id %}" method="POST">
+            {% csrf_token %}
+            {% for question in quiz.questions.all %}
+                <p>
+                    <div>Question {{ forloop.counter }}</div>
+                    {{ question.text }}
+                </p>
+                {% for choice in question.choices.all %}
+                    <div>
+                        <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">
+                        {{ choice.text }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            <button style="margin-top:16px" class="submit-button w3-button" type="submit">Submit</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/base.js' %}"></script>
+{% endblock %}

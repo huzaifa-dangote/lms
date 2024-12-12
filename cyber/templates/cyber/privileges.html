@@ -1,0 +1,59 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if user.is_admin %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="w3-container horizontal-margin-74px">
+                    <div class="messages w3-panel w3-pale-green w3-display-container">
+                        <span onclick="this.parentElement.style.display='none'"
+                                class="w3-button w3-medium w3-display-topright">&times;</span>
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="horizontal-margin-90px text-font-bahnschrift">
+            <h3 class="text-font-bahnschrift text-weight-300">Assign privileges</h3>
+
+            <!-- Users with admin rights -->
+            <p class="text-font-bahnschrift text-weight-100">Users with admin privileges</p>
+            <ul class="text-font-bahnschrift text-weight-100">
+                {% for user in admin_users %}
+                    <li>{{ user.username }}</li>
+                {% endfor %}
+            </ul>
+
+            <form action="{% url 'privileges' %}" method="post">
+                {% csrf_token %}
+
+                <!-- To assign admin rights to users -->
+                <h4 class="text-font-bahnschrift text-weight-300">Assign to:</h4>
+                {% for user in users %}
+                    <div>
+                        <input type="checkbox" id="user{{ user.id }}" name="users" value="{{ user.id }}">
+                        <label for="user{{ user.id }}">{{ user.username }}</label>
+                    </div>
+                {% endfor %}
+
+                <button style="margin-top:16px" class="submit-button w3-button" type="submit">Assign admin privilege</button>
+            </form>
+        </div>
+
+    {% else %}
+
+        <div class="horizontal-margin-90px">
+            <h3>You don't have permission to access this page</h3>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/base.js' %}"></script>
+{% endblock %}

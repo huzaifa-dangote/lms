@@ -1,0 +1,22 @@
+<!-- Dynamic display of search results -->
+<div class="course-container text-font-bahnschrift">
+    <div class="course-row">
+        {% for course in courses %}
+        <div class="course-col">
+            <a href="{% url 'course-content' course.id %}" class="no-underline">
+                <div class="course">
+                    <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                    <div class="course-summary">
+                        <div style="margin-top:10px" class="text-size-20px"><b>{{ course.title }}</b></div>
+                        <div style="margin-top:16px" class="ellipsis-text text-weight-100">{{ course.description }}</div>
+                        <p class="text-weight-100">Skill level: {{ course.skill_level }}</p>
+                        <div class="text-weight-100 center-icon-text">
+                            <i class="fa fa-clock-o text-size-24px"></i><span style="margin-left:10px">{{ course.start_date }} - {{ course.end_date }}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>

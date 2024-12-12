@@ -1,0 +1,46 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if user.is_admin %}
+
+        <div class="horizontal-margin-90px text-font-bahnschrift">
+            <h3 class="text-font-bahnschrift text-weight-300">Assign a Quiz</h3>
+            <form action="{% url 'assign-quiz' %}" method="post">
+                {% csrf_token %}
+
+                <!-- To select a quiz -->
+                <h4 class="text-font-bahnschrift text-weight-300">Select a Quiz:</h4>
+                <select class="w3-select" name="quiz_id">
+                    {% for quiz in quizzes %}
+                        <option value="{{ quiz.id }}">{{ quiz.title }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- To assign to one or more users -->
+                <h4 class="text-font-bahnschrift text-weight-300">Assign to:</h4>
+                {% for user in users %}
+                    <div>
+                        <input type="checkbox" id="user{{ user.id }}" name="users" value="{{ user.id }}">
+                        <label for="user{{ user.id }}">{{ user.username }}</label>
+                    </div>
+                {% endfor %}
+
+                <button style="margin-top:16px" class="submit-button w3-button" type="submit">Assign quiz</button>
+            </form>
+        </div>
+
+    {% else %}
+
+        <div class="horizontal-margin-90px">
+            <h3>You don't have permission to access this page</h3>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/base.js' %}"></script>
+{% endblock %}

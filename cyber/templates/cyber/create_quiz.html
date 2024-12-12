@@ -1,0 +1,61 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if user.is_admin %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="w3-container horizontal-margin-74px">
+                    <div class="messages w3-panel w3-pale-green w3-display-container">
+                        <span onclick="this.parentElement.style.display='none'"
+                                class="w3-button w3-medium w3-display-topright">&times;</span>
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="horizontal-margin-90px text-font-bahnschrift">
+            <h3>Create a quiz</h3>
+            <form action="{% url 'create-quiz' %}" method="POST" id="quiz-form">
+                {% csrf_token %}
+                <p class="text-size-17px text-weight-100">
+                    * Click the checkbox to indicate correct choices
+                </p>
+                <p class="text-size-17px text-weight-100">
+                    <label>Quiz title</label>
+                    <input style="width:50%" class="w3-input w3-border w3-round input-height-35px" type="text" name="title">
+                </p>
+
+                <p class="text-size-17px text-weight-100">
+                    Choose a related course<br />
+                    <select style="width:50%" class="w3-select" name="course_id">
+                        {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.title }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+
+                <!-- Container to handle questions and choices dynamically -->
+                <div id="questions-container" class="text-size-17px text-weight-100"></div>
+
+                <button id="add-question-button" class="submit-button w3-button" type="button" onclick="addQuestion()">Add Question</button>
+                <button id="create-quiz-button" class="submit-button w3-button" type="submit">Create Quiz</button>
+            </form>
+        </div>
+
+    {% else %}
+
+        <div class="horizontal-margin-90px">
+            <h3>You don't have permission to access this page</h3>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/create_quiz.js' %}"></script>
+{% endblock %}

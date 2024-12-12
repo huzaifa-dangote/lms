@@ -1,0 +1,37 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <!-- Page heading -->
+    <div style="margin-top:10px" class="horizontal-margin-90px text-size-30px text-font-bahnschrift">
+        <i class="fa fa-book"></i><span style="margin-left:10px">My Progress</span>
+    </div>
+
+    <div class="horizontal-margin-90px text-font-bahnschrift">
+        <hr />
+    
+
+        <!-- To display all charts -->
+        <div class="chart-container">
+            <canvas class="chart" id="myPhishingPieChart"></canvas><br />
+            <canvas class="chart" id="myCoursePieChart"></canvas><br />
+            <canvas class="chart" id="myQuizPieChart"></canvas><br />
+        </div>
+
+        <!-- Data to be used in progress_chart.js file -->
+        {{ phishing_labels|json_script:"phishing_labels-data" }}
+        {{ course_labels|json_script:"course_labels-data" }}
+        {{ quiz_labels|json_script:"quiz_labels-data" }}
+        {{ phishing|json_script:"phishing-data" }}
+        {{ course|json_script:"course-data" }}
+        {{ quiz|json_script:"quiz-data" }}
+
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="{% static 'cyber/progress_chart.js' %}"></script>
+{% endblock %}

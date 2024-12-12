@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <title>Cyber</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{% static 'cyber/styles.css' %}" rel="stylesheet" />
+        {% block script %}
+        {% endblock %}
+    </head>
+
+    <body>
+
+        <!-- Navigation bar -->
+        <div id="home-page-nav" class="w3-bar w3-light-grey horizontal-padding-90px text-font-bahnschrift text-size-17px">
+            <a href="{% url 'index' %}" class="w3-bar-item w3-button w3-hover-none w3-border-light-grey w3-bottombar w3-hover-border-green w3-padding-16">Courses</a>
+            <a href="{% url 'mail' %}" class="w3-bar-item w3-button w3-hover-none w3-border-light-grey w3-bottombar w3-hover-border-green w3-hide-medium w3-hide-small w3-padding-16">Email</a>
+            <a href="{% url 'quizzes' user.id %}" class="w3-bar-item w3-button w3-hover-none w3-border-light-grey w3-bottombar w3-hover-border-green w3-hide-medium w3-hide-small w3-padding-16">Quizzes</a>
+            <a href="{% url 'progress' %}" class="w3-bar-item w3-button w3-hover-none w3-border-light-grey w3-bottombar w3-hover-border-green w3-hide-medium w3-hide-small w3-padding-16">Progress</a>
+
+            <!-- For admin tab -->
+            {% if user.is_admin %}
+                <div class="w3-dropdown-hover">
+                  <button class="w3-button w3-hide-medium w3-hide-small w3-padding-16">Admin Panel</button>
+                  <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="{% url 'create-content' %}" class="w3-bar-item w3-button w3-hover-green">Create content</a>
+                    <a href="{% url 'create-course' %}" class="w3-bar-item w3-button w3-hover-green">Create course</a>
+                    <a href="{% url 'manage-quiz' %}" class="w3-bar-item w3-button w3-hover-green">Quiz management</a>
+                    <a href="{% url 'compose' %}" class="w3-bar-item w3-button w3-hover-green">Phishing simulator</a>
+                    <a href="{% url 'privileges' %}" class="w3-bar-item w3-button w3-hover-green">User privileges</a>
+                  </div>
+                </div>
+            {% endif %}
+
+            <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hover-none w3-border-light-grey w3-bottombar w3-hover-border-green w3-hide-medium w3-hide-small w3-padding-16 w3-right">Sign out</a>
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-padding-16 w3-hide-large" onclick="expand_nav()">&#9776;</a>
+            <span class="w3-bar-item w3-padding-16 w3-right">{{ user.username }}</span>
+        </div>
+
+        <!-- Collapsed nav -->
+        <div id="collapsed-nav" class="w3-bar-block w3-light-grey w3-hide w3-hide-large text-font-bahnschrift text-size-17px">
+            <a href="{% url 'index' %}" class="w3-bar-item w3-button">Courses</a>
+            <a href="{% url 'mail' %}" class="w3-bar-item w3-button">Email</a>
+            <a href="{% url 'quizzes' user.id %}" class="w3-bar-item w3-button">Quizzes</a>
+            <a href="{% url 'progress' %}" class="w3-bar-item w3-button">Progress</a>
+
+            <!-- For admin tab -->
+            {% if user.is_admin %}
+                <div class="w3-dropdown-hover">
+                  <button class="w3-button">Admin Panel</button>
+                  <div class="w3-dropdown-content w3-bar-block">
+                    <a href="{% url 'create-content' %}" class="w3-bar-item w3-button">Create content</a>
+                    <a href="{% url 'create-course' %}" class="w3-bar-item w3-button">Create course</a>
+                    <a href="{% url 'manage-quiz' %}" class="w3-bar-item w3-button">Quiz management</a>
+                    <a href="{% url 'compose' %}" class="w3-bar-item w3-button">Phishing simulator</a>
+                    <a href="{% url 'privileges' %}" class="w3-bar-item w3-button">User privileges</a>
+                  </div>
+                </div>
+            {% endif %}
+
+            <a href="{% url 'logout' %}" class="w3-bar-item w3-button">Sign out</a>
+        </div>
+
+        <div class="w3-panel w3-row">
+            <div class="w3-col l8">
+                {% block body %}
+                {% endblock %}
+            </div>
+            <div id="cyber-league" class="w3-col l4">
+                <div style="margin-top:20px;text-align:center" class="text-font-bahnschrift text-size-20px"><i class="fa fa-trophy" style="margin-right: 10px; color: #b39800"></i>Employee Cyber League</div>
+                <table class="w3-table w3-bordered w3-border text-font-bahnschrift" style="margin-top:10px">
+                    <tr class="text-size-17px">
+                        <th>No.</th>
+                        <th>Username</th>
+                        <th>Points</th>
+                    </tr>
+                    {% for table_user in table_users %}
+                        
+                        {% if table_user == user %}
+                        <tr style="background-color:gold" class="text-weight-100">
+                        {% else %}
+                        <tr class="text-weight-100">
+                        {% endif %}
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ table_user.username }}</td>
+                            <td>{{ table_user.points }}</td>
+                        </tr>
+
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <!-- To get user id -->
+    <div id="user-id" hidden>{{ user.id }}</div>
+    
+    <!-- Page heading -->
+    <div style="margin-top:10px" class="horizontal-margin-90px text-size-30px text-font-bahnschrift">
+        <i class="fa fa-book"></i><span style="margin-left:10px">My Courses</span>
+    </div>
+
+    <!-- Search functionality -->
+    <div style="margin-left:90px" class="text-font-bahnschrift">
+        <form id="search-form" class="search-container">
+            <div>
+                <input id="search-input" class="w3-input w3-border" type="text" placeholder="Search by course title">
+            </div>
+        </form>
+    </div>
+
+    <!-- List of courses -->
+    <div class="course-container horizontal-margin-90px text-font-bahnschrift">
+        <div id="results" class="course-row">
+            {% for course in courses %}
+            <div class="course-col">
+                <a href="{% url 'course-content' course.id %}" class="no-underline">
+                    <div class="course">
+                        <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                        <div class="course-summary">
+                            <div style="margin-top:10px" class="text-size-20px"><b>{{ course.title }}</b></div>
+                            <div style="margin-top:16px" class="ellipsis-text text-weight-100">{{ course.description }}</div>
+                            <p class="text-weight-100">Skill level: {{ course.skill_level }}</p>
+                            <div class="text-weight-100 center-icon-text">
+                                <i class="fa fa-clock-o text-size-24px"></i><span style="margin-left:10px">{{ course.start_date }} - {{ course.end_date }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/index.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <title>Cyber</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{% static 'cyber/styles.css' %}" rel="stylesheet" />
+    </head>
+
+    <body>
+
+        <div class="w3-row">
+
+            <!-- Div containing welcome text and logo -->
+            <div class="w3-col l7 m6 background-image flex-container">
+                <div id="login-welcome-text">Build your detective skills with Cyber</div>
+                <div id="login-welcome-text2">Learn how to stay safe in an interconnected world. 
+                You will learn skills required to recognize attacks from cybercriminals.</div>
+                <img src="{% static 'cyber/images/logo.png' %}" alt="Cyber Logo" style="width:30%" />
+            </div>
+
+            <!-- Div containing register functionality -->
+            <div style="height:100vh" class="w3-col l5 m6 w3-white flex-container text-font-bahnschrift">
+                <div class="text-weight-400 text-size-30px width-70p">Sign Up</div>
+                <div class="short-lightblue-line"></div>
+                <div class="text-weight-100 text-size-17px width-70p">You'll be able to start learning as soon as you sign up.</div>
+
+                <!-- For displaying alerts -->
+                {% if messages %}
+                    {% for message in messages %}
+
+                    <div id="alert-div" class="{{ message.tags }} margin-top-16px text-size-15px text-weight-100 center-icon-text">
+                        <i style="margin-right: 8px" class="fa fa-warning caution-sign-red text-size-24px"></i> <span>{{ message }}</span>
+                    </div>
+
+                    {% endfor %}
+                {% endif %}
+
+                <!-- Sign up form -->
+                <div class="width-70p margin-top">
+                    <form action="{% url 'register' %}" method="post">
+                        {% csrf_token %}
+                        <p>
+                            <label class="text-weight-100">Email</label>
+                            <input autofocus class="w3-input w3-border w3-round input-height-35px" type="email" name="email" />
+                        </p>
+                        <p>
+                            <label class="text-weight-100">Password</label>
+                            <input class="w3-input w3-border w3-round input-height-35px" type="password" name="password" />
+                        </p>
+                        <p>
+                            <label class="text-weight-100">Confirm Password</label>
+                            <input class="w3-input w3-border w3-round input-height-35px" type="password" name="confirmation" />
+                        </p>
+                        <div class="margin-top-bottom-32px">
+                            <button class="login-button w3-button w3-round-xxlarge text-size-17px" type="submit"><b>Login</b></button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Log in if your already have an account -->
+                <div id="register-div" class="text-size-17px text-weight-100">
+                    Already have an account? <a href="{% url 'login' %}" class="lightblue-link">Log in here</a>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

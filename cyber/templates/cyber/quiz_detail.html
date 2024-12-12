@@ -1,0 +1,51 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if user.is_admin %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="w3-container horizontal-margin-74px">
+                    <div class="messages w3-panel w3-pale-green w3-display-container">
+                        <span onclick="this.parentElement.style.display='none'"
+                                class="w3-button w3-medium w3-display-topright">&times;</span>
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="horizontal-margin-90px text-font-bahnschrift">
+            <h3 class="text-font-bahnschrift text-weight-300">{{ quiz.title }}</h3>
+            <ol class="text-size-17px text-weight-100">
+                {% for question in questions %}
+                    <li>
+                        {{ question.text }}
+                        <ol style="margin-bottom:10px" class="alphabetical">
+                            {% for choice in question.choices.all %}
+                                <li>{{ choice.text }} {% if choice.is_correct %}<span class="correct-choice text-size-15px">Correct</span>{% endif %}</li>
+                            {% endfor %}
+                        </ol>
+                    </li>
+                {% endfor %}
+            </ol>
+
+            <!-- Assign quiz -->
+            <a class="text-size-17px lightblue-link" href="{% url 'assign-quiz' %}">Assign quiz</a>
+        </div>
+
+    {% else %}
+
+        <div class="horizontal-margin-90px">
+            <h3>You don't have permission to access this page</h3>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/base.js' %}"></script>
+{% endblock %}

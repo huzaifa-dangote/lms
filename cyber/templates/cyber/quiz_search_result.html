@@ -1,0 +1,30 @@
+<div class="text-font-bahnschrift">
+
+    <!-- List of quizzes -->
+    {% for quiz in quizzes %}
+
+        <div class="quiz text-size-17px text-weight-100">
+            <img src="{{ quiz.course.image.url }}" alt="{{ quiz.title }}" />
+            <div class="quiz-summary">
+                <div style="height:180px">
+                    <h4 class="text-font-bahnschrift"><b>{{ quiz.title }}</b></h4>
+                    <p>Difficulty Level: {{ quiz.course.skill_level }}</p>
+                    <p class="center-icon-text">
+                        <i class="fa fa-clock-o text-size-24px"></i><span style="margin-left:10px">{{ quiz.course.start_date }} - {{ quiz.course.end_date }}</span>
+                    </p>
+                    {% if user in quiz.completed_by.all %}
+                        {% if user in quiz.passed_by.all %}
+                            <div style="color:green">Passed</div>
+                        {% else %}
+                            <div style="color:red">Failed</div>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'take-quiz' quiz.id %}" class="green-button">Attempt quiz</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+</div>

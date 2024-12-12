@@ -1,0 +1,29 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="w3-container horizontal-margin-74px">
+                <div class="messages w3-panel w3-pale-green w3-display-container">
+                    <span onclick="this.parentElement.style.display='none'"
+                            class="w3-button w3-medium w3-display-topright">&times;</span>
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="horizontal-margin-90px text-font-bahnschrift">
+        <h3 class="text-font-bahnschrift text-weight-300">That was a simulated phishing email and you fell for it.</h3>
+        <p class="text-size-17px text-weight-100">What's next?</p>
+        <p class="text-size-17px text-weight-100">You should re-take courses to strengthen your cybersecurity awareness.</p>
+        <div style="color:red" class="text-size-17px text-weight-100">Sorry, you have lost 6 points in the employee cyber league.</div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/base.js' %}"></script>
+{% endblock %}

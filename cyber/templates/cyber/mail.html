@@ -1,0 +1,37 @@
+{% extends "cyber/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <!-- To get user id -->
+    <div id="user-id" hidden>{{ user.id }}</div>
+    
+    <!-- Page heading -->
+    <div style="margin-top:10px" class="horizontal-margin-90px text-size-30px text-font-bahnschrift">
+        <i class="fa fa-book"></i><span style="margin-left:10px">My Mails</span>
+    </div>
+
+    <div class="horizontal-margin-90px text-font-bahnschrift">
+
+        <!-- Displays all emails -->
+        <div id="inbox-container">
+            {% for email in emails %}
+
+                <div onclick="load_email({{ email.id }})" id="emails-view">
+                    <div style="width:100px">{{ email.sender }}</div>
+                    <div style="width:400px" class="ellipsis-text"><b>{{ email.subject }}</b> - {{ email.body }}</div>
+                    <div>{{ email.timestamp }}</div>
+                </div>
+
+            {% endfor %}
+        </div>
+
+        <!-- Displays a single email -->
+        <div id="email-container" class="text-size-17px text-weight-100"></div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cyber/inbox.js' %}"></script>
+{% endblock %}
